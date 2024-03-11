@@ -99,6 +99,12 @@ bool UDPSocket::init(bool ipv6, bool noExceptions)
 	m_addr_family = ipv6 ? AF_INET6 : AF_INET;
 	m_handle = socket(m_addr_family, SOCK_DGRAM, IPPROTO_UDP);
 
+	// Fixes bug where rapid restarts cause CONNEVENT_BIND_FAILED
+	// https://github.com/minetest/minetest/issues/11832
+	// https://stackoverflow.com/questions/15198834/bind-failed-address-already-in-use
+	int reuse_port = 1;
+	setsockopt(m_handle, SOL_SOCKET, SO_REUSEPORT, &reuse_port, sizeof(reuse_port));
+
 	if (socket_enable_debug_output) {
 		tracestream << "UDPSocket(" << (int)m_handle
 			<< ")::UDPSocket(): ipv6 = " << (ipv6 ? "true" : "false")

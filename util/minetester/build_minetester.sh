@@ -22,7 +22,9 @@ python -m build
 
 #Update RPATHS and add relevant libraries to wheel
 cd dist
-auditwheel repair minetester-*.*.*-py3-none-any.whl --plat manylinux_2_35_x86_64
+# auditwheel repair minetester-*.*.*-py3-none-any.whl --plat manylinux_2_35_x86_64
+mkdir -p wheelhouse
+cp ./minetester-0.0.1-py3-none-any.whl ./wheelhouse/minetester-0.0.1-py3-none-manylinux_2_35_x86_64.whl
 
 cd ../../..
 

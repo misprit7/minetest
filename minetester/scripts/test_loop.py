@@ -10,7 +10,7 @@ env = Minetest(
     base_seed=42,
     start_minetest=True,
     headless=True,
-    start_xvfb=True,
+    start_xvfb=False,
 )
 env = TimeLimit(env, max_episode_steps=max_steps)
 
